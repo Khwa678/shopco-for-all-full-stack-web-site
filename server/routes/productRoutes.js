@@ -30,5 +30,24 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+// ✅ ADD PRODUCT
+router.post("/", async (req, res) => {
+  try {
+    const { name, price, image } = req.body;
+
+    const newProduct = new Product({
+      name,
+      price,
+      image,
+    });
+
+    await newProduct.save();
+
+    res.status(201).json(newProduct);
+  } catch (err) {
+    console.log("ERROR:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
 
 export default router;
